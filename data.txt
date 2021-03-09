@@ -1,0 +1,34 @@
+create database richpeach;
+CREATE OR REPLACE USER 'richpeach'@'localhost' IDENTIFIED BY '7jmX^*#D>J),y5q_';
+GRANT SELECT, INSERT, UPDATE, DELETE ON richpeach.* TO 'richpeach'@'localhost';
+FLUSH PRIVILEGES;
+
+CREATE TABLE `user_sessions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pubdate` datetime NOT NULL DEFAULT current_timestamp(),
+  `access_user` int(11) DEFAULT 0,
+  `state` varchar(254) DEFAULT NULL,
+  `access_token` varchar(254) DEFAULT NULL,
+  `access_time` int(11) DEFAULT 0,
+  PRIMARY KEY (`id`,`pubdate`),
+  UNIQUE KEY `id` (`id`,`pubdate`),
+  KEY `idx_state_us` (`state`),
+  KEY `user_pubdate` (`state`,`pubdate`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `ads` (
+  `adid` varchar(254) DEFAULT NULL,
+  `campaignid` varchar(254) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  UNIQUE KEY `id` (`adid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `user_data` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `access_user` int(11) DEFAULT 0,
+  `account_id` varchar(254) DEFAULT NULL,
+  `account_name` varchar(254) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `idx_user` (`access_user`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
